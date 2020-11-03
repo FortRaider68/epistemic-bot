@@ -1,0 +1,16 @@
+{
+  "name": "epistemic-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "jimp": "^0.16.1"
+  },
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
