@@ -1,2 +1,11 @@
 node_modules
 .env
+
+tmp/Quotes/*
+
+!tmp/Quotes/.gitkeep
+
+
+
+src/utils/BreakLinePhrase.js
+src/utils/genCanvasText.js
