@@ -5,7 +5,9 @@
   "license": "MIT",
   "dependencies": {
     "crypto": "^1.0.1",
-    "jimp": "^0.16.1"
+    "fs": "^0.0.1-security",
+    "jimp": "^0.16.1",
+    "regex-parser": "^2.2.11"
   },
   "scripts": {
     "dev": "node src/index.js"

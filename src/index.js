@@ -1,6 +1,10 @@
 const JIMP = require('jimp')
 const Crypto = require('crypto')
 
+const validator = require("./utils/validator")
+const sanitizer = require("./utils/sanitizer")
+
+
 const TmpDirectory = "tmp/Quotes"
 
 async function CreateQuote(Phrase, src) {
