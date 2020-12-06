@@ -2,7 +2,16 @@ const fs = require('fs')
 const regex_parser = require('regex-parser')
 
 module.exports = function sanitizer(objectText) {
-  let { Philosopher, Quote } = objectText
+
+  const text = objectText.trim()
+
+  const removeMention = /<@&[0-9]{18}>/g
+
+  const textWithoutMention = text.replace(removeMention, "").trim()
+
+  let [Philosopher, ...partsQuote] = textWithoutMention.split(" ")
+
+  let Quote = partsQuote.join(" ")
 
   const allPhilosophers = fs.readdirSync("./assets/Templates")
 
@@ -10,15 +19,16 @@ module.exports = function sanitizer(objectText) {
 
   const philoNameMatch = new RegExp(regex_parser(regexString))
 
+  const philosopherMatch = Philosopher.match(philoNameMatch)
 
-  if (Philosopher == null) {
+  if (philosopherMatch == null) {
     const randomPhilosopher = allPhilosophers[Math.floor(Math.random() * allPhilosophers.length)]
+    Quote = `${Philosopher} ${Quote}`
     Philosopher = randomPhilosopher;
   } else {
-    Philosopher = Philosopher.match(philoNameMatch).toString()
+    Philosopher = philosopherMatch.toString()
     Philosopher = [...Philosopher[0].toUpperCase(), ...Philosopher.substring(1).toLowerCase()].join("")
   }
-
 
   Quote = Quote.substring(0, 192)
 

@@ -1,29 +1,38 @@
-const JIMP = require('jimp')
-const Crypto = require('crypto')
-
-const validator = require("./utils/validator")
-const sanitizer = require("./utils/sanitizer")
+const Discord = require("discord.js")
+const fs = require('fs')
 
 
-const TmpDirectory = "tmp/Quotes"
+const validator = require('./utils/validator')
+const sanitizer = require('./utils/sanitizer')
+const quoteCreator = require('./quoteCreator')
 
-async function CreateQuote(Phrase, src) {
-  try {
-    const image = await JIMP.read(src)
+const client = new Discord.Client()
 
-    const font = await JIMP.loadFont(JIMP.FONT_SANS_32_WHITE);
-    
-    await image.print(font,30,25,Phrase,620)
+require("dotenv").config()
 
-    Crypto.randomBytes(16,(err,bytes)=>{
-      image.write(`${TmpDirectory}/${bytes.toString("HEX")}.png`)
+client.on("message", async (message) => {
+  const botID = message.mentions.toJSON().roles[0]
+
+  if (!message.author.bot && message.content.includes(botID)) {
+    const userSend = message.author;
+    const Content = message.content
+
+    const ValidateContent = validator(Content)
+
+    const sanitizerContent = sanitizer(Content)
+
+    const pathQuote = await quoteCreator(sanitizerContent)
+
+    message.channel.send(`${userSend}`, { files: [pathQuote] }, (err, response) => {
+      if (response) {
+        fs.unlinkSync(pathQuote)
+      }
     })
-    console.log("Complete")
-  } catch (error) {
-    console.error(error);
+
+
   }
+})
 
 
-}
-
+client.login(process.env.DISCORD_TOKEN)
 

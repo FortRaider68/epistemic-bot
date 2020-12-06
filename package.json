@@ -5,14 +5,16 @@
   "license": "MIT",
   "dependencies": {
     "crypto": "^1.0.1",
+    "discord.js": "^12.5.1",
     "fs": "^0.0.1-security",
     "jimp": "^0.16.1",
     "regex-parser": "^2.2.11"
   },
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6"
   }
 }
